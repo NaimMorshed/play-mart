@@ -1,0 +1,35 @@
+.parent-div-cart {
+    width: 80%;
+    background-color: rgba(0, 81, 255, 0.288);
+    padding: 20px 30px;
+    border-radius: 5px;
+}
+
+.child-div-cart > div {
+    margin: 5px 0;
+}
+
+.save-order-button {
+    padding: 7px 10px;
+    border-radius: 5px;
+    background-color: rgba(0, 81, 255, 0.288);
+    color: white;
+    border: 1px solid rgba(0, 81, 255, 0.842);
+}
+
+.clear-order-button {
+    padding: 7px 10px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: rgba(255, 0, 0, 0.288);
+    color: white;
+    border: 1px solid rgba(255, 0, 0, 0.842);
+}
+
+.save-order-button:hover {
+    background-color: rgba(0, 81, 255, 0.842);
+}
+
+.clear-order-button:hover {
+    background-color: rgba(255, 0, 0, 0.842);
+}

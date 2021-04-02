@@ -1,0 +1,49 @@
+.admin-heading {
+    padding: 5px 0;
+    background-color: #4056b51c;
+    border-radius: 10px;
+}
+
+.admin-body {
+    background-color: #4056b51c;
+    padding: 50px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.photo-div {
+    background-color: rgb(202, 202, 202);
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed black;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 210px;
+    height: 230px;
+}
+
+.photo-div > img {
+    width: 210px;
+    height: 230px;
+}
+
+.col-md-6 input {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 10px;
+}
+
+.save-button {
+    border: 0;
+    padding: 8px 50px;
+    border-radius: 10px;
+    background-color: rgb(77, 204, 128);
+}
+
+.cancel-button {
+    border: 0;
+    padding: 8px 12px;
+}

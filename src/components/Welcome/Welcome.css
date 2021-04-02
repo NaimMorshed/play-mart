@@ -1,0 +1,25 @@
+.background {
+    background-image: url(../../images/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.text {
+    text-shadow: 1px 1px 5px white;
+    font-family: 'New Tegomin', serif;
+}
+
+.shop-now-btn {
+    font-family: 'Train One', cursive;
+    font-size: 14px;
+    padding: 15px 30px;
+    border: 0;
+    border-radius: 10px;
+    color: white;
+    background-image: linear-gradient(#c31432, #240b36);
+}
+
+.shop-now-btn:hover {
+    cursor: pointer;
+}
