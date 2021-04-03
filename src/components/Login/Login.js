@@ -15,7 +15,7 @@ if (!firebase.apps.length) {
 }
 
 const Login = () => {
-    const [authentication, setAuthentication] = useContext(UserContext);
+    const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };

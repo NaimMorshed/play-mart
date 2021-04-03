@@ -13,21 +13,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Orders = () => {
+    const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
 
     //Backdrops
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-    };
+    const handleClose = () => setOpen(false);
+    const handleToggle = () => setOpen(!open);
 
-    const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
-
-    const [users, setUsers] = useState([]);
-
+    // GET data "email"
+    const [games, setGames] = useState([]);
     useEffect(() => {
         handleToggle();
         fetch('http://localhost:5000/getGames?token=' + authentication.email)
@@ -35,7 +30,7 @@ const Orders = () => {
             .then(data => {
                 handleClose();
                 console.log(data);
-                setUsers(data)
+                setGames(data)
             })
             .catch(err => {
                 handleClose();
@@ -44,10 +39,10 @@ const Orders = () => {
     }, [])
 
     // Price calculation
-    // let totalPrice = 0;
-    // for (let i = 0; i < setUsers.length; i++) {
-    //     totalPrice += parseInt(setUsers[i].price);
-    // }
+    let totalPrice = 0;
+    for (let i = 0; i < games.length; i++) {
+        totalPrice += parseInt(games[i].price);
+    }
 
     return (
         <div className="App">
@@ -66,9 +61,9 @@ const Orders = () => {
                     <hr /><br />
 
                     {/* Dynamic cart */}
-                    {users.length === 0 && <h4>Cart is empty</h4>}
+                    {games.length === 0 && <h4>Cart is empty</h4>}
                     {
-                        users && users.map(data => <Checkout data={data} />)
+                        games.map(data => <Checkout data={data} />)
                     }
                     <br /><hr />
 
@@ -76,8 +71,8 @@ const Orders = () => {
                     <div className="row">
                         <div className="col-md-1"></div>
                         <div className="col-md-7 text-start"><h5>Total</h5></div>
-                        <div className="col-md-2">{cartItems.length}</div>
-                        <div className="col-md-2">$</div>
+                        <div className="col-md-2">{games.length}</div>
+                        <div className="col-md-2">${totalPrice}</div>
                     </div>
 
                 </div>
@@ -91,6 +86,7 @@ const Orders = () => {
                     <CircularProgress color="inherit" />
                 </Backdrop>
             </div>
+
         </div>
     );
 };

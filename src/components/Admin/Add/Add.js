@@ -73,7 +73,6 @@ const Add = () => {
         backdropToggle();
         axios.post('https://api.imgbb.com/1/upload', imageData)
             .then(function (response) {
-                console.log(response);
                 const newObj = { ...userData };
                 newObj.image = response.data.data.display_url;
                 newObj.hasImage = true;
@@ -81,8 +80,8 @@ const Add = () => {
                 backdropClose();
             })
             .catch(function (error) {
-                console.log(error);
                 backdropClose();
+                alert(error)
             });
     }
 
@@ -117,6 +116,7 @@ const Add = () => {
     const saveButton = () => {
         if (userData.validate) {
             backdropToggle();
+            // POST data "root"
             fetch('http://localhost:5000/addGames', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
@@ -126,7 +126,11 @@ const Add = () => {
                 .then(data => {
                     backdropClose();
                     handleClickOpen("Hurray!", "Game data has been successfully added to the server", "Done");
-                    console.log(data)
+                    cancelButton();
+                })
+                .catch(err => {
+                    backdropClose();
+                    handleClickOpen("Oops!", "This ended up with an error", "Try Again");
                 })
 
         } else {

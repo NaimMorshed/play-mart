@@ -7,31 +7,25 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../App';
+import SnackbarUI from '../MeterialUI/SnackbarUI';
+const useStyles = makeStyles((theme) => ({ backdrop: { zIndex: theme.zIndex.drawer + 1, color: '#fff', }, }));
 
-const useStyles = makeStyles((theme) => ({
-    backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
-    },
-}));
 
 const Home = () => {
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
+    const [callBackdrop, setCall] = useState(false);
 
     //Backdrops
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-    };
+    const handleClose = () => setOpen(false);
+    const handleToggle = () => setOpen(!open);
 
+    // GET data "root"
     const [users, setUsers] = useState([]);
     useEffect(() => {
         handleToggle();
-        fetch('http://localhost:5000/getGames?token='+"root")
+        fetch('http://localhost:5000/getGames?token=root')
             .then(res => res.json())
             .then(data => {
                 handleClose();
@@ -48,6 +42,7 @@ const Home = () => {
         cartItems.map(x => tempArray.push(x))
         tempArray.push(data);
         setCartItems(tempArray);
+        setCall(true);
     }
 
     return (
@@ -68,6 +63,11 @@ const Home = () => {
                     <CircularProgress color="inherit" />
                 </Backdrop>
             </div>
+
+            {
+                callBackdrop && <SnackbarUI message="Added to cart"/> 
+            }
+
         </div>
     );
 };

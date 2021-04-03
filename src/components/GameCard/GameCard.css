@@ -25,4 +25,9 @@
 
 .game-card-container {
     margin: 20px;
+    transition: 0.2s;
+}
+
+.game-card-container:hover {
+    transform: translate(0, -30px);
 }

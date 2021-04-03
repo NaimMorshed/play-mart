@@ -6,7 +6,7 @@ const Deals = () => {
         <div className="App">
             <Header />
             <div className="App-header">
-                Deals
+                Page under construction
             </div>
         </div>
     );

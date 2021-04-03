@@ -13,6 +13,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import SnackbarUI from '../../MeterialUI/SnackbarUI';
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Manage = () => {
+    const [callBackdrop, setCall] = useState(false);
 
     // Backdrop
     const classes = useStyles();
@@ -57,24 +59,26 @@ const Manage = () => {
        
         const id = newData._id;
 
-        fetch(`/update/${id}`, {
+        fetch(`http://localhost:5000/delete/${id}`, {
             method: 'PATCH',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify(newData)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            alert("Edited")
+        })
 
     }
     const alertCancel = () => {
         setOpen(false);
     }
 
-
+    // GET data "root"
     const [users, setUsers] = useState([]);
     useEffect(() => {
         backdropToggle();
-        fetch('http://localhost:5000/getGames?token='+"root")
+        fetch('http://localhost:5000/getGames?token=root')
             .then(res => res.json())
             .then(data => {
                 backdropClose();
@@ -94,19 +98,17 @@ const Manage = () => {
     const deleteButtonClick = (data) => {
         const id = data._id;
         console.log(id);
-        //backdropToggle();
         fetch(`http://localhost:5000/delete/${id}`, {
             method: 'DELETE'
         })
-            .then(res => res.json())
-            .then(res => {
-                //backdropClose();
-                console.log("deleted");
-            })
-            .catch(err => {
-                //backdropClose();
-                console.log(err);
-            })
+        setCall(true);
+            // .then(res => res.json())
+            // .then(res => {
+            //     alert('Deleted')
+            // })
+            // .catch(err => {
+            //     alert(err)
+            // })
     }
 
     return (
@@ -189,6 +191,10 @@ const Manage = () => {
                     </DialogActions>
                 </Dialog>
             </div>
+
+            {
+                callBackdrop && <SnackbarUI message="Deleted"/> 
+            }
 
         </div>
     );

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
-    // const [cartItems, setCartItems] = useContext(UserContext);
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
 
     //Backdrop
@@ -31,15 +30,17 @@ const Cart = () => {
     }
 
     const saveAllOrders = () => {
-
-        // Change token
+        // Change token to email
         let newArray = { ...cartItems };
         for (let i in newArray) {
+            delete newArray[i]._id;
             if (newArray[i].token === "root") {
                 newArray[i].token = authentication.email;
             }
         }
 
+        // POST data "email"
+        handleToggle();
         fetch('http://localhost:5000/addGames', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
@@ -47,7 +48,12 @@ const Cart = () => {
         })
             .then(res => res.json())
             .then(data => {
+                handleClose();
                 alert('Added to orders')
+            })
+            .catch(err => {
+                handleClose();
+                alert(err)
             })
     }
 
