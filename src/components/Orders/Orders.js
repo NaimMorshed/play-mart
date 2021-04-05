@@ -25,7 +25,7 @@ const Orders = () => {
     const [games, setGames] = useState([]);
     useEffect(() => {
         handleToggle();
-        fetch('http://localhost:5000/getGames?token=' + authentication.email)
+        fetch('https://calm-meadow-69908.herokuapp.com/getGames?token=' + authentication.email)
             .then(res => res.json())
             .then(data => {
                 handleClose();
@@ -46,7 +46,7 @@ const Orders = () => {
     const deleteButtonClick = (data) => {
         const id = data._id;
         console.log(id);
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`https://calm-meadow-69908.herokuapp.com/delete/${id}`, {
             method: 'DELETE'
         })
         alert('Deleted, refresh to see changes')

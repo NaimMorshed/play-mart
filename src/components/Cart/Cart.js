@@ -44,7 +44,7 @@ const Cart = () => {
         // POST data "email"
         console.log(cartItems);
         handleToggle();
-        fetch('http://localhost:5000/addGames', {
+        fetch('https://calm-meadow-69908.herokuapp.com/addGames', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(cartItems)

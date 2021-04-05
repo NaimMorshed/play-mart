@@ -27,7 +27,7 @@ const Home = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         handleToggle();
-        fetch('http://localhost:5000/getGames?token=root')
+        fetch('https://calm-meadow-69908.herokuapp.com/getGames?token=root')
             .then(res => res.json())
             .then(data => {
                 handleClose();

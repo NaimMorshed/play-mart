@@ -118,7 +118,7 @@ const Add = () => {
             const arrayData = [{ ...userData }];
             backdropToggle();
             // POST data "root"
-            fetch('http://localhost:5000/addGames', {
+            fetch('https://calm-meadow-69908.herokuapp.com/addGames', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(arrayData)

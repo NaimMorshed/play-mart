@@ -53,7 +53,7 @@ const Manage = () => {
 
         const id = newData._id;
 
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`https://calm-meadow-69908.herokuapp.com/delete/${id}`, {
             method: 'PATCH',
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(newData)
@@ -70,7 +70,7 @@ const Manage = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         backdropToggle();
-        fetch('http://localhost:5000/getGames?token=root')
+        fetch('https://calm-meadow-69908.herokuapp.com/getGames?token=root')
             .then(res => res.json())
             .then(data => {
                 backdropClose();
@@ -90,7 +90,7 @@ const Manage = () => {
     const deleteButtonClick = (data) => {
         const id = data._id;
         console.log(id);
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`https://calm-meadow-69908.herokuapp.com/delete/${id}`, {
             method: 'DELETE'
         })
         setCall(true);
