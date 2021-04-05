@@ -24,15 +24,18 @@ const Header = () => {
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
     return (
         <div className="custom-nav">
-            <Navbar bg="dark" variant="dark">
+            <Navbar expand="sm" bg="dark" variant="dark" collapseOnSelect>
                 <img src={logo} alt="" />
                 <Navbar.Brand>PLAYMART</Navbar.Brand>
-                <Nav className="mr-auto">
-                    <Nav.Link onClick={() => { history.push('/home') }}>Home</Nav.Link>
-                    <Nav.Link onClick={() => { history.push('/orders') }}>Orders</Nav.Link>
-                    <Nav.Link onClick={() => { history.push('/admin') }}>Admin</Nav.Link>
-                    <Nav.Link onClick={() => { history.push('/deals') }}>Deals</Nav.Link>
-                </Nav>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link onClick={() => { history.push('/home') }}>Home</Nav.Link>
+                        <Nav.Link onClick={() => { history.push('/orders') }}>Orders</Nav.Link>
+                        <Nav.Link onClick={() => { history.push('/admin') }}>Admin</Nav.Link>
+                        <Nav.Link onClick={() => { history.push('/deals') }}>Deals</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
 
                 {/* Badge */}
                 <div className="mr-3">

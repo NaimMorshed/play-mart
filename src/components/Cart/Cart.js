@@ -89,7 +89,7 @@ const Cart = () => {
 
                     {/* Table heading */}
                     <div className="row child-div-cart">
-                        <div className="col-md-2"></div>
+                        <div className="col-md-z2"></div>
                         <div className="col-md-4 text-start"><h5>Description</h5></div>
                         <div className="col-md-2"><h5>Quantity</h5></div>
                         <div className="col-md-2"><h5>Price</h5></div>
