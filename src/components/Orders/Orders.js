@@ -29,7 +29,6 @@ const Orders = () => {
             .then(res => res.json())
             .then(data => {
                 handleClose();
-                console.log(data);
                 setGames(data)
             })
             .catch(err => {
@@ -44,38 +43,51 @@ const Orders = () => {
         totalPrice += parseInt(games[i].price);
     }
 
+    const deleteButtonClick = (data) => {
+        const id = data._id;
+        console.log(id);
+        fetch(`http://localhost:5000/delete/${id}`, {
+            method: 'DELETE'
+        })
+        alert('Deleted, refresh to see changes')
+    }
+
     return (
         <div className="App">
             <Header />
             <header className="App-header home-background">
 
-                <div className="parent-div-cart">
+                <div className="mt-4" />
+                <div className="parent-div-cart mt-5">
 
                     {/* Table heading */}
                     <div className="row child-div-cart">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-7 text-start"><h5>Description</h5></div>
+                        <div className="col-md-2"></div>
+                        <div className="col-md-4 text-start"><h5>Description</h5></div>
                         <div className="col-md-2"><h5>Quantity</h5></div>
                         <div className="col-md-2"><h5>Price</h5></div>
+                        <div className="col-md-2"><h5>Action</h5></div>
                     </div>
                     <hr /><br />
 
                     {/* Dynamic cart */}
                     {games.length === 0 && <h4>Cart is empty</h4>}
                     {
-                        games.map(data => <Checkout data={data} />)
+                        games.map(data => <Checkout data={data} deleteButton={() => deleteButtonClick(data)} />)
                     }
                     <br /><hr />
 
                     {/* Total section */}
                     <div className="row">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-7 text-start"><h5>Total</h5></div>
+                        <div className="col-md-2"></div>
+                        <div className="col-md-4 text-start"><h5>Total</h5></div>
                         <div className="col-md-2">{games.length}</div>
                         <div className="col-md-2">${totalPrice}</div>
+                        <div className="col-md-2"></div>
                     </div>
 
                 </div>
+                <div className="mb-3" />
                 <br />
 
             </header>

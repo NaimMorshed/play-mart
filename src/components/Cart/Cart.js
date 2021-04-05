@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './Cart.css';
 //Backdrop import
 import Header from '../Header/Header';
@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../App';
 import Checkout from '../Checkout/Checkout';
+import ModalUI from '../Admin/BootstrapUI/ModalUI';
 const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
@@ -16,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
+    const [modalShow, setModalShow] = useState({ state: false, heading: '', body: '', type: '' });
 
     //Backdrop
     const classes = useStyles();
@@ -40,16 +42,20 @@ const Cart = () => {
         }
 
         // POST data "email"
+        console.log(cartItems);
         handleToggle();
         fetch('http://localhost:5000/addGames', {
             method: 'POST',
             headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(newArray)
+            body: JSON.stringify(cartItems)
         })
             .then(res => res.json())
             .then(data => {
                 handleClose();
-                alert('Added to orders')
+                setModalShow({
+                    state: true, heading: 'Order confirmed', body: 'Navigate to orders section to see ordered list', type: 'success'
+                })
+                clearOrders()
             })
             .catch(err => {
                 handleClose();
@@ -61,35 +67,50 @@ const Cart = () => {
         setCartItems([]);
     }
 
+    const deleteButtonClick = (data) => {
+        // const id = data._id;
+        // let newArray = cartItems;
+        // for (let i = 0; i < newArray.length; i++) {
+        //     if (newArray[i] === data) {
+        //         newArray.splice(i, 1);
+        //     }
+        // }
+        // setCartItems(newArray);
+        // alert('Deleted, refresh to see changes')
+    }
+
     return (
         <div className="App">
             <Header />
             <header className="App-header home-background">
 
-                <div className="parent-div-cart">
+                <div className="mt-4" />
+                <div className="parent-div-cart mt-5">
 
                     {/* Table heading */}
                     <div className="row child-div-cart">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-7 text-start"><h5>Description</h5></div>
+                        <div className="col-md-2"></div>
+                        <div className="col-md-4 text-start"><h5>Description</h5></div>
                         <div className="col-md-2"><h5>Quantity</h5></div>
                         <div className="col-md-2"><h5>Price</h5></div>
+                        <div className="col-md-2"><h5>Action</h5></div>
                     </div>
                     <hr /><br />
 
                     {/* Dynamic cart */}
                     {cartItems.length === 0 && <h4>Cart is empty</h4>}
                     {
-                        cartItems && cartItems.map(data => <Checkout data={data} />)
+                        cartItems && cartItems.map(data => <Checkout data={data} deleteButton={() => deleteButtonClick(data)} />)
                     }
                     <br /><hr />
 
                     {/* Total section */}
                     <div className="row">
-                        <div className="col-md-1"></div>
-                        <div className="col-md-7 text-start"><h5>Total</h5></div>
+                        <div className="col-md-2"></div>
+                        <div className="col-md-4 text-start"><h5>Total</h5></div>
                         <div className="col-md-2">{cartItems.length}</div>
                         <div className="col-md-2">${totalPrice}</div>
+                        <div className="col-md-2"></div>
                     </div>
 
                 </div>
@@ -101,6 +122,7 @@ const Cart = () => {
                         <button onClick={clearOrders} className="clear-order-button">Clear</button>
                     </div>
                 }
+                <div className="mb-3" />
             </header>
 
             {/* Backdrop */}
@@ -109,6 +131,11 @@ const Cart = () => {
                     <CircularProgress color="inherit" />
                 </Backdrop>
             </div>
+
+            {
+                modalShow.state && <ModalUI heading={modalShow.heading} body={modalShow.body} type={modalShow.type} />
+            }
+
         </div>
     );
 };

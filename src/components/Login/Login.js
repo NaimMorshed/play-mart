@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from '../Header/Header';
 import './Login.css'
 import logo from '../../images/login-logo.png';
@@ -8,6 +8,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
+import ModalUI from '../Admin/BootstrapUI/ModalUI';
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 } else {
@@ -15,6 +16,7 @@ if (!firebase.apps.length) {
 }
 
 const Login = () => {
+    const [modalShow, setModalShow] = useState({ state: false, errorMessage: '' });
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
@@ -37,7 +39,7 @@ const Login = () => {
                 history.replace(from);
             }).catch((error) => {
                 const errorMessage = error.message;
-                alert(errorMessage);
+                setModalShow({ state: true, errorMessage: errorMessage })
             });
     }
 
@@ -45,21 +47,32 @@ const Login = () => {
         <div className="App">
             <Header />
             <div className="App-header login-background">
+
+                <div className="mt-5"></div>
+                <div className="mt-5"></div>
+
                 <div className="parent-login-div">
                     <img src={logo} alt="" />
                     <h4>LOGIN TO <span className="sample-text">YOUR ACCOUNT</span></h4>
                     <p><small className="blur-text">Get access to the gaming world</small></p>
 
                     <form className="login-form">
-                        <input type="email" name="email" placeholder="Email" required/>
-                        <input type="password" name="password" placeholder="Password" required/>
-                        <input className="btn btn-primary" type="button" value="Login"/>
+                        <input type="email" name="email" placeholder="Email" required />
+                        <input type="password" name="password" placeholder="Password" required />
+                        <input className="btn btn-primary" type="button" value="Login" />
                     </form>
-                    <div className="mt-3"><p><small onClick={() =>history.push('/create-account')} className="account-text">I don't have an account</small></p></div>
+                    <div className="mt-3"><p><small onClick={() => history.push('/create-account')} className="account-text">I don't have an account</small></p></div>
                     <div className="social-media">
                         <img onClick={googleSignIn} className="google" src={google} alt="" />
                     </div>
                 </div>
+
+                <div className="mb-4"></div>
+
+                {
+                    modalShow.state && <ModalUI heading="Error" body={modalShow.errorMessage} type="error" />
+                }
+
             </div>
         </div>
     );

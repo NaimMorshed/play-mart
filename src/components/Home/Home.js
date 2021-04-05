@@ -8,10 +8,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { UserContext } from '../../App';
 import SnackbarUI from '../MeterialUI/SnackbarUI';
+import ModalUI from '../Admin/BootstrapUI/ModalUI';
 const useStyles = makeStyles((theme) => ({ backdrop: { zIndex: theme.zIndex.drawer + 1, color: '#fff', }, }));
 
 
 const Home = () => {
+    const [modalShow, setModalShow] = useState({ state: false, errorMessage: '' });
     const [authentication, setAuthentication, cartItems, setCartItems] = useContext(UserContext);
     const [callBackdrop, setCall] = useState(false);
 
@@ -33,7 +35,7 @@ const Home = () => {
             })
             .catch(err => {
                 handleClose();
-                alert(err);
+                setModalShow({ state: true, errorMessage: err.message })
             })
     }, [])
 
@@ -65,7 +67,12 @@ const Home = () => {
             </div>
 
             {
-                callBackdrop && <SnackbarUI message="Added to cart"/> 
+                callBackdrop && <SnackbarUI message="Added to cart" />
+            }
+
+            {/* ModalUI */}
+            {
+                modalShow.state && <ModalUI heading="Error" body={modalShow.errorMessage} type="error" />
             }
 
         </div>

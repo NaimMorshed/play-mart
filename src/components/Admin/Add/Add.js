@@ -115,12 +115,13 @@ const Add = () => {
 
     const saveButton = () => {
         if (userData.validate) {
+            const arrayData = [{ ...userData }];
             backdropToggle();
             // POST data "root"
             fetch('http://localhost:5000/addGames', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(userData)
+                body: JSON.stringify(arrayData)
             })
                 .then(res => res.json())
                 .then(data => {
@@ -153,6 +154,7 @@ const Add = () => {
             hasImage: false,
             validate: false
         })
+        
     }
 
     return (

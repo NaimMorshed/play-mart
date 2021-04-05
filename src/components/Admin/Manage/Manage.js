@@ -14,6 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SnackbarUI from '../../MeterialUI/SnackbarUI';
+import ModalUI from '../BootstrapUI/ModalUI';
 
 const useStyles = makeStyles((theme) => ({
     backdrop: {
@@ -23,27 +24,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Manage = () => {
+    const [modalShow, setModalShow] = useState(false);
     const [callBackdrop, setCall] = useState(false);
 
     // Backdrop
     const classes = useStyles();
     const [backdropOpen, setBackdropOpen] = React.useState(false);
-    const backdropClose = () => {
-        setBackdropOpen(false);
-    };
-    const backdropToggle = () => {
-        setBackdropOpen(!backdropOpen);
-    };
+    const backdropClose = () => setBackdropOpen(false);
+    const backdropToggle = () => setBackdropOpen(!backdropOpen);
 
     // Alert
     const [open, setOpen] = React.useState(false);
     const [previousData, setPreviousData] = useState({});
-    const alertOpen = () => {
-        setOpen(true);
-    };
-    const alertClose = () => {
-        setOpen(false);
-    };
+    const alertOpen = () => setOpen(true);
+    const alertClose = () => setOpen(false);
     const alertUpdate = () => {
         setOpen(false);
         const gameName = document.getElementById('gameName').value;
@@ -51,28 +45,26 @@ const Manage = () => {
         const discountPrice = document.getElementById('discountPrice').value;
         const releasedYear = document.getElementById('releasedYear').value;
 
-        const newData = {...previousData};
+        const newData = { ...previousData };
         newData.name = gameName;
         newData.price = gamePrice;
         newData.discount = discountPrice;
         newData.released = releasedYear;
-       
+
         const id = newData._id;
 
         fetch(`http://localhost:5000/delete/${id}`, {
             method: 'PATCH',
-            headers: {'Content-type': 'application/json'},
+            headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(newData)
         })
-        .then(res => res.json())
-        .then(data => {
-            alert("Edited")
-        })
+            .then(res => res.json())
+            .then(data => {
+                alert("Edited")
+            })
 
     }
-    const alertCancel = () => {
-        setOpen(false);
-    }
+    const alertCancel = () => setOpen(false);
 
     // GET data "root"
     const [users, setUsers] = useState([]);
@@ -91,7 +83,7 @@ const Manage = () => {
     }, [])
 
     const editButtonClick = (data) => {
-        setPreviousData({...data});
+        setPreviousData({ ...data });
         alertOpen();
     }
 
@@ -102,13 +94,13 @@ const Manage = () => {
             method: 'DELETE'
         })
         setCall(true);
-            // .then(res => res.json())
-            // .then(res => {
-            //     alert('Deleted')
-            // })
-            // .catch(err => {
-            //     alert(err)
-            // })
+        // .then(res => res.json())
+        // .then(res => {
+        //     alert('Deleted')
+        // })
+        // .catch(err => {
+        //     alert(err)
+        // })
     }
 
     return (
@@ -193,7 +185,12 @@ const Manage = () => {
             </div>
 
             {
-                callBackdrop && <SnackbarUI message="Deleted"/> 
+                callBackdrop && <SnackbarUI message="Deleted" />
+            }
+
+            {/* ModalUI */}
+            {
+                modalShow && <ModalUI heading="Deleted" body="Item deleted successfully" type="error" />
             }
 
         </div>
