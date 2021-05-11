@@ -16,3 +16,4 @@
 
 Project By Naim Morshed.
 
+Server side repo: https://github.com/NaimMorshed/play-mart_resume.git
